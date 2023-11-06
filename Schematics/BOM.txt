@@ -4,6 +4,7 @@ DFminiMP3 - 1
 SD card - 1 
 Speaker - 1 
 Toggle switch - 1
+Resistors 220 Ohm - 2 
 
 Light: 
 First option - leds with 150-220ohms resistors 
