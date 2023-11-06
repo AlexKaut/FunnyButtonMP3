@@ -9,6 +9,7 @@ Resistors 220 Ohm - 2
 Light: 
 First option - leds with 150-220ohms resistors 
 Second option -led strip with transistor key (IRF740 as an example) 
+Third option - address led strip
 
 Power: 
 First optioh - 5 volt cable with power supply, or you can just use USB
