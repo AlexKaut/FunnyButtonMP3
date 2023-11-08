@@ -1,4 +1,4 @@
-A lamp in the shape of a key - 1
+A lamp in the shape of a keycap - 1
 Arduino nano - 1
 DFminiMP3 - 1
 SD card - 1 
