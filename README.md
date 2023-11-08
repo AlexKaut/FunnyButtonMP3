@@ -1,5 +1,5 @@
 # FunnyButtonMP3
-Instructions on how to make a meme button on an arduino with a mp3 module https://github.com/Alex-Kaut/FunnyButtonMP3/assets/86695572/e67b4f7b-6d2a-426c-a4b4-fe1f6d439667
+Instructions on how to make a meme button on an arduino with a mp3 module https://user-images.githubusercontent.com/86695572/281571624-9afb67dc-21ec-4187-90bc-02e8e9e3312b.mp4
 
 
 # Introduction
