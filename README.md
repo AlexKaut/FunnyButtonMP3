@@ -1,6 +1,6 @@
 # FunnyButtonMP3
 Instructions on how to make a meme button on an arduino with a mp3 module
-![Image alt](https://github.com/Alex-Kaut/FunnyButtonMP3/blob/main/Videos/Yellow-leds-dark.mp4)
+![Video alt](https://github.com/Alex-Kaut/FunnyButtonMP3/blob/main/Videos/Yellow-leds-dark.mp4)
 
 
 # Introduction
