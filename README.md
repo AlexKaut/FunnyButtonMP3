@@ -33,7 +33,7 @@ Third option - address led strip
 
 First optioh - 5 volt cable with power supply, or you can just use USB
 
-Second option - 2 batteries 18650 and 5 volt voltage stabilizer (7805 as an example)
+Second option - 2 or 3 batteries 18650 and 5 volt voltage stabilizer (7805 as an example)
 
 # Schematics 
 ## Power
@@ -59,3 +59,196 @@ This is a very convenient option for such a project, thanks to the transistor ke
 ![DFminiMP3](https://github.com/Alex-Kaut/FunnyButtonMP3/assets/86695572/cce7852f-f49a-4ec3-973f-5a97268b4754)
 
 DFminiMP3 plays audio files from a micro SD card. On a clean sd card, we create a folder "mp3", and into this folder downloads audio files with the names "0001", "0002" and so on. In my case, only one audio file "0001" is used
+
+# Firmware 
+## Button part 
+```cpp
+bool Status = 0; 
+
+void setup() {
+  pinMode(button_pin, INPUT_PULLUP);  //Button
+  Status = !digitalRead(button_pin);
+}
+
+void loop() {
+  if (digitalRead(button_pin) == Status) {
+    //DO SOMETHING
+    Status = !Status;
+  }
+}
+```
+This template allows you to use the switch as a push button 
+
+## DFminiMP3 library 
+https://github.com/Alex-Kaut/FunnyButtonMP3/blob/main/Firmware/DFRobotDFPlayerMini-master.zip
+DFRobotDFPlayerMini.h - Download it and put in arduino libraries folder 
+
+## Adress LED strip firmware
+https://github.com/FastLED/FastLED?ysclid=loqho9iymx269211766
+FastLED.h -Download it and put in arduino libraries folder 
+```cpp
+
+#include "Arduino.h"
+#include "SoftwareSerial.h"
+#include "DFRobotDFPlayerMini.h"
+#include "FastLED.h"
+
+SoftwareSerial mySoftwareSerial(10, 11); // RX, TX
+DFRobotDFPlayerMini myDFPlayer;
+void printDetail(uint8_t type, int value);
+
+
+#define LED_PIN 3     
+#define LED_NUM 21    //Number of LEDs
+#define BUTTON_PIN 6  
+
+bool Status = 0;
+CRGB leds[LED_NUM];
+
+void setup() {
+  mySoftwareSerial.begin(9600);
+  //Serial.begin(115200); //Use it to check button
+
+  pinMode(BUTTON_PIN, INPUT_PULLUP);  //Button
+
+  if (!myDFPlayer.begin(mySoftwareSerial)) {  //Using SoftwareSerial to connect with DFminiMp3.
+    Serial.println(F("Unable to begin:"));
+    Serial.println(F("1.Please recheck the connection!"));
+    Serial.println(F("2.Please insert the SD card!"));
+    while (true);
+  }
+  Serial.println(F("DFPlayer Mini online."));
+
+  myDFPlayer.volume(30);  //Volume level, 30 is maximum
+  Status = !digitalRead(BUTTON_PIN);
+
+
+  FastLED.addLeds< WS2812, LED_PIN, GRB>(leds, LED_NUM);
+  FastLED.setBrightness(0);
+  for (int i = 0; i < LED_NUM; i++) {   //Setting the yellow color
+    leds[i].setRGB(255, 110, 0);
+  }
+  FastLED.show();
+}
+
+void loop() {
+  if (digitalRead(BUTTON_PIN) == Status) {
+    FastLED.setBrightness(200);
+    FastLED.show();
+    myDFPlayer.play(1); //Playing first mp3 file
+    delay(1350);
+
+    myDFPlayer.pause();
+    FastLED.setBrightness(0);
+    FastLED.show();
+    Status = !Status;
+  }
+  //Serial.println(digitalRead(A3)); //Use it to check button
+}
+```
+The code is simple and clear: set the pins, number of LEDs in the strip, the color - that's all, you can upload it to the arduino
+
+## Basic firmware 
+```cpp
+#include "Arduino.h"
+#include "SoftwareSerial.h"
+#include "DFRobotDFPlayerMini.h"
+
+SoftwareSerial mySoftwareSerial(10, 11); // RX, TX
+DFRobotDFPlayerMini myDFPlayer;
+void printDetail(uint8_t type, int value);
+
+#define button_pin 6
+#define led_pin1 2
+#define led_pin2 3
+#define led_pin3 5
+#define led_pin4 7
+
+bool Status = 0;
+
+void led_turn(bool led_status) {
+  digitalWrite(led_pin1, led_turn);
+  digitalWrite(led_pin2, led_turn);
+  digitalWrite(led_pin3, led_turn);
+  digitalWrite(led_pin4, led_turn);
+  return(0);
+}
+
+void setup() {
+  mySoftwareSerial.begin(9600);
+  Serial.begin(115200);
+  pinMode(led_pin1, OUTPUT);          //Leds
+  pinMode(led_pin2, OUTPUT);
+  pinMode(led_pin3, OUTPUT);
+  pinMode(led_pin4, OUTPUT);
+
+  pinMode(button_pin, INPUT_PULLUP);  //Button
+
+  if (!myDFPlayer.begin(mySoftwareSerial)) {  //Using SoftwareSerial to connect with DFminiMp3.
+    Serial.println(F("Unable to begin:"));
+    Serial.println(F("1.Please recheck the connection!"));
+    Serial.println(F("2.Please insert the SD card!"));
+    while (true);
+  }
+  Serial.println(F("DFPlayer Mini online."));
+
+  myDFPlayer.volume(30);  //Volume level, 30 is maximum
+  Status = !digitalRead(button_pin);
+}
+void loop() {
+  if (digitalRead(button_pin) == Status) {
+    led_turn(HIGH);         //Leds ON
+    myDFPlayer.play(1);     //Playing first mp3 file
+    delay(1000);
+    myDFPlayer.pause();     //Mp3 stop
+    led_turn(LOW);          //Leds OFF
+    Status = !Status;
+  }
+}
+```
+If you have assembled a variant with several LEDs for different arduino pins, then we write the pins to which the LEDs are connected (led_pin1, led_pin2, etc.) and flash the arduino
+
+If you have assembled a variant with transistor key, delete "void led_turn(){}" and rewrite the code a bit, it will look like this 
+
+```cpp
+#include "Arduino.h"
+#include "SoftwareSerial.h"
+#include "DFRobotDFPlayerMini.h"
+
+SoftwareSerial mySoftwareSerial(10, 11); // RX, TX
+DFRobotDFPlayerMini myDFPlayer;
+void printDetail(uint8_t type, int value);
+
+#define button_pin 6
+#define key_pin 2
+
+bool Status = 0;
+
+void setup() {
+  mySoftwareSerial.begin(9600);
+  Serial.begin(115200);
+  pinMode(key_pin, OUTPUT);           //Key
+  pinMode(button_pin, INPUT_PULLUP);  //Button
+
+  if (!myDFPlayer.begin(mySoftwareSerial)) {  //Using SoftwareSerial to connect with DFminiMp3.
+    Serial.println(F("Unable to begin:"));
+    Serial.println(F("1.Please recheck the connection!"));
+    Serial.println(F("2.Please insert the SD card!"));
+    while (true);
+  }
+  Serial.println(F("DFPlayer Mini online."));
+
+  myDFPlayer.volume(30);  //Volume level, 30 is maximum
+  Status = !digitalRead(button_pin);
+}
+void loop() {
+  if (digitalRead(button_pin) == Status) {
+    digitalWrite(key_pin, HIGH);        //Leds ON
+    myDFPlayer.play(1);                 //Playing first mp3 file
+    delay(1000);
+    myDFPlayer.pause();                 //Mp3 stop
+    digitalWrite(key_pin, LOW)          //Leds OFF
+    Status = !Status;
+  }
+}
+```
