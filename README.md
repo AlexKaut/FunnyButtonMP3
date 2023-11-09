@@ -206,7 +206,7 @@ void loop() {
   }
 }
 ```
-If you have assembled a variant with several LEDs for different arduino pins, then we write the pins to which the LEDs are connected (led_pin1, led_pin2, etc.) and flash the arduino
+If you have assembled a variant with several LEDs for different arduino pins, just write the "define pins" to which the LEDs are connected (led_pin1, led_pin2, etc.) and flash the arduino
 
 If you have assembled a variant with transistor key, delete "void led_turn(){}" and rewrite the code a bit, it will look like this 
 
