@@ -13,4 +13,4 @@ Third option - address led strip
 
 Power: 
 First optioh - 5 volt cable with power supply, or you can just use USB
-Second option - 2 batteries 18650 and 5 volt voltage stabilizer (7805 as an example)
+Second option - 2 or 3 batteries 18650 and 5 volt voltage stabilizer (7805 as an example)
