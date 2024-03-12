@@ -1,0 +1,2 @@
+DFRobotDFPlayerMini - https://github.com/DFRobot/DFRobotDFPlayerMini
+FastLED.h - https://github.com/FastLED/FastLED
