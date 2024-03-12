@@ -20,7 +20,7 @@ The second option is to stabilize the battery voltage to 5 volts. For example, y
 
 # Firmware
 ## DFminiMP3 and Python RenamingScript
-DFminiMP3 plays mp3 files from a micro SD card. To prepare the SD card for this task, format it, create an MP3 player folder on it and upload audio files to this folder, adding the numbering "0001", "0002" and so on to the beginning of their names. For example, if you had 3 files "Song.mp3", "Cartoon.mp3" and "Spring.mp3", then you will need to rename them to "0001-Song.mp3", "0002-Cartoon.mp3" and "0003-Spring.mp3"
+DFminiMP3 plays mp3 files from a micro SD card. To prepare the SD card for this task, format it, create an "mp3" folder on it and upload audio files to this folder, adding the numbering "0001", "0002" and so on to the beginning of their names. For example, if you had 3 files "Song.mp3", "Cartoon.mp3" and "Spring.mp3", then you will need to rename them to "0001-Song.mp3", "0002-Cartoon.mp3" and "0003-Spring.mp3"
 To speed up the process of renaming files, I wrote a simple python script for this task. Run the script, enter the path
 to the mp3 folder, and all files in the folder will be numbered in the name, and the script will output an array with the lengths of mp3 files 
 
@@ -29,8 +29,18 @@ This script is using Mutagen Python module
 ![image](https://github.com/AlexKaut/FunnyButtonMP3/assets/86695572/2f90402e-c204-4433-b599-cd2704e0bf56)
 
 ## Arduino code 
-### Firmware Description
+### Firmware description
+Install "DFRobotDFPlayerMini.h" and "FastLED.h" [libraries](https://github.com/AlexKaut/FunnyButtonMP3/tree/main/Firmware/Arduino-Libraries) 
 
+When using an Arduino Pro Mini 3.3V (8MHz) microcontroller, connect the DFminiMP3 directly to the UART pins. Software UART may not work correctly
+
+An unconnected analog pin is used to generate a random seed
+
+Playback of MP3 files is implemented in such a way that the files will not be repeated until each audio file has been played
+
+The code is designed for a latching button, the "Status" variable is used to control the switch state
+
+### Firmware configuration
 Since DFminiMP3 cannot determine the length of audio files lying on the SD card, the length will be set in the firmware of the microcontroller itself. To do this, in the firmware, we will need to set the number of the last file on the SD card (#define MAX_VALUE) and insert an array with lengths that was generated after executing the python script
 Open FunnyButtonMP3.ino and find these lines
 ```cpp
