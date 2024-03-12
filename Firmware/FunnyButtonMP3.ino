@@ -1,9 +1,7 @@
 #include "Arduino.h"
-#include "SoftwareSerial.h"
 #include "DFRobotDFPlayerMini.h"
 #include "FastLED.h"
 
-SoftwareSerial mySoftwareSerial(10, 11); // RX, TX
 DFRobotDFPlayerMini myDFPlayer;
 void printDetail(uint8_t type, int value);
 
@@ -44,7 +42,7 @@ int numbers[ARRAY_SIZE];
 int currentIndex = 0;
 
 //Array with mp3 file lengths in seconds. To generate this array, you can use python script
-int mp3length[] = {3, 8, 13, 1, 3, 11, 1, 5, 4, 4, 10, 4, 6, 4, 4, 8, 2, 6, 8, 10, 
+unsigned long mp3length[] = {3, 8, 13, 1, 3, 11, 1, 5, 4, 4, 10, 4, 6, 4, 4, 8, 2, 6, 8, 10, 
 2, 1, 4, 2, 3, 5, 3, 4, 2, 2, 2, 3, 3, 2, 2, 6, 1, 8, 2};
 
 bool Status = 0;     //Button status 
@@ -112,8 +110,7 @@ void loop() {
     if (digitalRead(BUTTON_PIN) == Status) {
       Status = !Status;
     }
-  }
-  //Serial.println(digitalRead(BUTTON_PIN)); //Use it to check button 
+  } 
 }
 
 
