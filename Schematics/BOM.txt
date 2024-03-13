@@ -1,0 +1,16 @@
+A lamp in the shape of a keycap - 1
+Arduino nano - 1
+DFminiMP3 - 1
+SD card - 1 
+Speaker - 1 
+Toggle switch - 1
+Resistors 220 Ohm - 2 
+
+Light: 
+First option - leds with 150-220ohms resistors 
+Second option -led strip with transistor key (IRF740 as an example) 
+Third option - address led strip
+
+Power: 
+First optioh - 5 volt cable with power supply, or you can just use USB
+Second option - 2 or 3 batteries 18650 and 5 volt voltage stabilizer (7805 as an example)
