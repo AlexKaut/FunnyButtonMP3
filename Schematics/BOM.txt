@@ -8,4 +8,5 @@ Resistors 220 Ohm - 2
 Resitor 100 Ohm
 18650 - 2
 18650 2x-case - 1 
+TP4056 - 1
 Adressable LED strip 
