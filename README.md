@@ -1,5 +1,6 @@
 # FunnyButtonMP3
 Materials for assembling button for playing audio memes - Arduino with the DFminiMP3 module
+YouTube video - https://youtu.be/tcvnKF4qjBs?si=ebEqtUGWjWDjs7ml
 
 https://github.com/AlexKaut/FunnyButtonMP3/assets/86695572/380a5822-c58d-47d0-9e67-f19f4b310871
 
